@@ -1,0 +1,129 @@
+.economic-event-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 4px;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.economic-event-row:last-child {
+  border-bottom: none;
+}
+
+.economic-event-row__dot {
+  width: 10px;
+  height: 10px;
+  min-width: 10px;
+  border-radius: 50%;
+}
+
+.economic-event-row__dot--high {
+  background: #dc2626;
+}
+
+.economic-event-row__dot--medium {
+  background: #f59e0b;
+}
+
+.economic-event-row__dot--low {
+  background: #eab308;
+}
+
+.economic-event-row__main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.economic-event-row__title-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.economic-event-row__country {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--color-text-muted);
+  background: var(--color-bg);
+  padding: 2px 8px;
+  border-radius: 6px;
+  direction: ltr;
+}
+
+.economic-event-row__title {
+  font-size: 13.5px;
+  font-weight: 600;
+}
+
+.economic-event-row__badge {
+  align-self: flex-start;
+  font-size: 10.5px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+  color: #fff;
+}
+
+.economic-event-row__badge--high {
+  background: #dc2626;
+}
+
+.economic-event-row__badge--medium {
+  background: #f59e0b;
+}
+
+.economic-event-row__badge--low {
+  background: #eab308;
+  color: #4a3b00;
+}
+
+.economic-event-row__values {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+.economic-event-row__time {
+  font-size: 12px;
+  font-weight: 700;
+  direction: ltr;
+  white-space: nowrap;
+}
+
+.economic-event-row__numbers {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 14px;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.economic-event-row__numbers b {
+  color: var(--color-text);
+  font-weight: 600;
+}
+
+@media (max-width: 560px) {
+  .economic-event-row {
+    flex-wrap: wrap;
+  }
+
+  .economic-event-row__values {
+    flex-direction: column;
+    align-items: flex-start;
+    text-align: right;
+    width: 100%;
+    padding-right: 22px;
+    gap: 6px;
+  }
+
+  .economic-event-row__numbers {
+    flex-wrap: wrap;
+  }
+}

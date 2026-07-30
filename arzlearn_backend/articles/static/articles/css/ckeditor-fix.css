@@ -1,0 +1,30 @@
+/*
+رفع تداخل حالت تیره‌ی پنل ادمین جنگو با تم CKEditor 5.
+بدون این فایل، بعضی مرورگرها/سیستم‌عامل‌ها (dark mode) باعث می‌شوند
+پس‌زمینه و متن ویرایشگر هر دو سفید شوند و متن دیده نشود.
+*/
+
+.django-ckeditor-5-widget,
+.ck.ck-editor {
+  color-scheme: light;
+}
+
+.ck.ck-content,
+.ck.ck-editor__editable {
+  background-color: #ffffff !important;
+  color: #1a1a1a !important;
+}
+
+.ck.ck-content * {
+  color: #1a1a1a !important;
+}
+
+.ck.ck-toolbar {
+  background-color: #f5f5f5 !important;
+  border-color: #ccc !important;
+}
+
+.ck.ck-button:not(.ck-disabled) .ck-icon,
+.ck.ck-dropdown .ck-button:not(.ck-disabled) .ck-icon {
+  color: #1a1a1a !important;
+}

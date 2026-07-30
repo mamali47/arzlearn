@@ -1,0 +1,32 @@
+.home-page {
+  padding: 28px 20px 60px;
+}
+
+.home-page__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+  margin-top: 36px;
+  align-items: start;
+}
+
+.home-page__section-header {
+  margin-bottom: 16px;
+}
+
+.home-page__analysis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.home-page__viewall {
+  width: 100%;
+  margin-top: 18px;
+}
+
+@media (max-width: 900px) {
+  .home-page__grid {
+    grid-template-columns: 1fr;
+  }
+}

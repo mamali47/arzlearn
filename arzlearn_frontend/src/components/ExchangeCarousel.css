@@ -1,0 +1,77 @@
+.exchange-carousel {
+  margin-top: 28px;
+}
+
+.exchange-carousel__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.exchange-carousel__arrows {
+  display: flex;
+  gap: 6px;
+}
+
+.exchange-carousel__arrows button {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+}
+
+.exchange-carousel__arrows button:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.exchange-carousel__track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: calc((100% - 4 * 16px) / 5);
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding-bottom: 4px;
+}
+
+.exchange-carousel__track::-webkit-scrollbar {
+  display: none;
+}
+
+.exchange-carousel__slide {
+  scroll-snap-align: start;
+  min-width: 0;
+}
+
+@media (max-width: 1100px) {
+  .exchange-carousel__track {
+    grid-auto-columns: calc((100% - 3 * 16px) / 4);
+  }
+}
+
+@media (max-width: 900px) {
+  .exchange-carousel__track {
+    grid-auto-columns: calc((100% - 2 * 16px) / 3);
+  }
+}
+
+@media (max-width: 640px) {
+  .exchange-carousel__track {
+    grid-auto-columns: calc((100% - 16px) / 2);
+  }
+}
+
+@media (max-width: 420px) {
+  .exchange-carousel__track {
+    grid-auto-columns: 80%;
+  }
+}

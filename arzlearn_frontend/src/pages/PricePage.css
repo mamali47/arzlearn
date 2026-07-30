@@ -1,0 +1,60 @@
+.price-page {
+  padding-bottom: 60px;
+}
+
+.price-page__content {
+  max-width: 720px;
+}
+
+.price-page__content h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 6px 0 20px;
+}
+
+.price-page__value-box {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.price-page__value {
+  font-size: 30px;
+  font-weight: 800;
+  direction: ltr;
+}
+
+.price-page__change {
+  font-size: 15px;
+  font-weight: 700;
+  direction: ltr;
+}
+
+.price-page__change.up {
+  color: var(--color-success);
+}
+
+.price-page__change.down {
+  color: var(--color-danger);
+}
+
+.price-page__faqs {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.price-page__faq-item h2 {
+  font-size: 16px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.price-page__faq-item p {
+  font-size: 14px;
+  line-height: 1.9;
+  color: var(--color-text-muted);
+  margin: 0;
+}
