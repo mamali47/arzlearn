@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from django.conf import settings
 
 from .models import Article, ArticleFAQ, Category, Tag
 
@@ -63,10 +64,10 @@ class ArticleListSerializer(serializers.ModelSerializer):
         )
 
     def get_image(self, obj):
-        request = self.context.get('request')
-        if obj.image and hasattr(obj.image, 'url'):
-            return request.build_absolute_uri(obj.image.url) if request else obj.image.url
-        return None
+    	request = self.context.get('request')
+    	if obj.image and hasattr(obj.image, 'url'):
+        	return request.build_absolute_uri(obj.image.url) if request else obj.image.url
+    	return None
 
 
 class ArticleDetailSerializer(ArticleListSerializer):
