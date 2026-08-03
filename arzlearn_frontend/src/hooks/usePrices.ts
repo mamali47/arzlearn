@@ -2,7 +2,10 @@ import { useEffect, useRef, useState } from 'react'
 import { fetchPrices } from '../api/endpoints'
 import type { Price } from '../api/types'
 
-const WS_BASE_URL = import.meta.env.VITE_WS_BASE_URL || 'ws://127.0.0.1:8000'
+const WS_BASE_URL =
+  import.meta.env.VITE_WS_BASE_URL ||
+  `${window.location.protocol === 'https:' ? 'wss' : 'ws'}://${window.location.host}`
+
 const WS_URL = `${WS_BASE_URL}/ws/prices/`
 const PING_INTERVAL_MS = 20000
 const RECONNECT_BASE_DELAY_MS = 1000

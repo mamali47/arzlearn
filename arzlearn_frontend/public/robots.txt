@@ -2,4 +2,4 @@ User-agent: *
 Allow: /
 
 # آدرس بک‌اند (Django) خودتون رو اینجا جایگزین کنید
-Sitemap: http://127.0.0.1:8000/sitemap.xml
+Sitemap: https://arzlearn.ir/sitemap.xml
