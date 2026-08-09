@@ -25,6 +25,16 @@
   margin-top: 18px;
 }
 
+.home-page__section-header--ghost {
+  visibility: hidden;
+}
+
+@media (max-width: 900px) {
+  .home-page__section-header--ghost {
+    display: none;
+  }
+}
+
 @media (max-width: 900px) {
   .home-page__grid {
     grid-template-columns: 1fr;
