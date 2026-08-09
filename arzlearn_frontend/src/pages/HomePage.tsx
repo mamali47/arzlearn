@@ -75,6 +75,9 @@ export default function HomePage() {
         </section>
 
         <aside className="home-page__sidebar">
+          <div className="home-page__section-header home-page__section-header--ghost" aria-hidden="true">
+            <h2 className="section-title">قیمت لحظه‌ای</h2>
+          </div>
           <PriceWidget />
         </aside>
       </div>
