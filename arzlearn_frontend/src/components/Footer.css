@@ -4,6 +4,32 @@
   margin-top: 48px;
 }
 
+.footer-about {
+  padding: 28px 20px 0;
+  border-bottom: 1px solid var(--color-border);
+  padding-bottom: 24px;
+}
+
+.footer-about p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 2;
+  color: var(--color-text-muted);
+  max-width: 900px;
+}
+
+.footer-about-link {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--color-primary);
+}
+
+.footer-about-link:hover {
+  text-decoration: underline;
+}
+
 .footer-inner {
   display: flex;
   justify-content: space-between;
