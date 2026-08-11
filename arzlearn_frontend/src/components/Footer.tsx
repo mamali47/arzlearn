@@ -16,6 +16,14 @@ export default function Footer() {
   return (
     <footer className="site-footer">
       <div className="container footer-inner">
+        <div className="container footer-about">
+        <p>
+          ارزلرن یک مجله تخصصی بازارهای مالی است که جدیدترین اخبار ارزهای دیجیتال،
+          آموزش‌های کاربردی، تحلیل بازار، بررسی صرافی‌ها و بروکرها، همچنین قیمت
+          لحظه‌ای ارز، دلار و طلا را ارائه می‌دهد. هدف ما ارائه اطلاعات دقیق و کاربردی
+          برای علاقه‌مندان به بازارهای مالی است.
+        </p>
+      </div>
         <div className="footer-brand">
           <Link to="/" className="site-logo">
             <img src="/logo.png" alt="ارزلرن" className="site-logo__image" />
