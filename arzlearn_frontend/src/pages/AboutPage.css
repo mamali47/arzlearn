@@ -1,0 +1,40 @@
+.about-page {
+  padding-bottom: 20px;
+}
+
+.about-page__content {
+  max-width: 780px;
+}
+
+.about-page__content h1 {
+  font-size: 24px;
+  font-weight: 800;
+  margin: 6px 0 20px;
+}
+
+.about-page__content h2 {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 28px 0 12px;
+}
+
+.about-page__content p {
+  font-size: 15px;
+  line-height: 2;
+  color: var(--color-text);
+  margin: 0 0 16px;
+}
+
+.about-page__team-note {
+  margin-top: 32px;
+  padding: 18px 20px;
+  background: var(--color-bg);
+  border-radius: var(--radius-md);
+  border-right: 3px solid var(--color-primary);
+}
+
+.about-page__team-note p {
+  margin: 0;
+  color: var(--color-text-muted);
+  font-size: 13.5px;
+}
