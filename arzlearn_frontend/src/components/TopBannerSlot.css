@@ -8,12 +8,4 @@
   width: 100%;
   height: auto;
   display: block;
-  max-height: 120px;
-  object-fit: cover;
-}
-
-@media (max-width: 600px) {
-  .top-banner-slot img {
-    max-height: 80px;
-  }
 }
