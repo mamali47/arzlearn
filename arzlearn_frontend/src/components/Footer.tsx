@@ -32,6 +32,9 @@ export default function Footer() {
           <p className="text-muted">
             مرجع اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال و طلا.
           </p>
+          <Link to="/about" className="footer-about-link">
+            درباره ما
+          </Link>
         </div>
 
         <div className="footer-socials">
