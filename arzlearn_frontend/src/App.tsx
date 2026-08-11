@@ -12,6 +12,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'))
 const SearchPage = lazy(() => import('./pages/SearchPage'))
 const EconomicCalendarPage = lazy(() => import('./pages/EconomicCalendarPage'))
 const PricePage = lazy(() => import('./pages/PricePage'))
+const AboutPage = lazy(() => import('./pages/AboutPage'))
 const NotFoundPage = lazy(() => import('./pages/NotFoundPage'))
 
 function PageFallback() {
