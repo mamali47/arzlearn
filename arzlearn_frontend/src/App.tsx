@@ -32,6 +32,7 @@ export default function App() {
           <Route path="/register" element={<RegisterPage />} />
           <Route path="/economic-calendar" element={<EconomicCalendarPage />} />
           <Route path="/price/:slug" element={<PricePage />} />
+          <Route path="/about" element={<AboutPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Route>
       </Routes>
