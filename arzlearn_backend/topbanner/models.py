@@ -1,22 +1,30 @@
 from django.db import models
 
+class Banner(models.Model):
+    title = models.CharField(max_length=200, blank=True)
+    url = models.URLField()
 
-class TopBanner(models.Model):
-    """
-    بنر تبلیغاتی/اطلاع‌رسانی بالای هدر سایت (بالاترین قسمت صفحه).
-    فقط یک بنر «فعال» در هر لحظه نمایش داده می‌شود. اگر هیچ بنر فعالی
-    وجود نداشته باشد، این قسمت اصلاً در سایت نمایش داده نمی‌شود.
-    """
+    # نسخه دسکتاپ - همین که الان داری
+    image_desktop = models.ImageField(
+        upload_to="banners/desktop/",
+        verbose_name="بنر دسکتاپ"
+    )
 
-    image = models.ImageField(upload_to='banners/', verbose_name='تصویر بنر')
-    link_url = models.URLField(verbose_name='لینک مقصد (وقتی کاربر روی بنر کلیک کند)')
-    is_active = models.BooleanField(default=True, verbose_name='فعال')
+    # نسخه موبایل - اختیاری؛ اگه خالی بود از دسکتاپ استفاده میشه
+    image_mobile = models.ImageField(
+        upload_to="banners/mobile/",
+        blank=True,
+        null=True,
+        verbose_name="بنر موبایل (اختیاری)"
+    )
+
+    alt_text = models.CharField(max_length=200, blank=True)
+    is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
 
     class Meta:
-        verbose_name = 'بنر بالای سایت'
-        verbose_name_plural = 'بنرهای بالای سایت'
-        ordering = ['-created_at']
+        verbose_name = "بنر تبلیغاتی"
+        verbose_name_plural = "بنرهای تبلیغاتی"
 
     def __str__(self):
-        return f'بنر #{self.pk} ({"فعال" if self.is_active else "غیرفعال"})'
+        return self.title or f"بنر #{self.pk}"
