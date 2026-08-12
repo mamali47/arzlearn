@@ -9,6 +9,12 @@ class TopBanner(models.Model):
     """
 
     image = models.ImageField(upload_to='banners/', verbose_name='تصویر بنر')
+    image_mobile = models.ImageField(
+        upload_to='banners/mobile/',
+        blank=True,
+        null=True,
+        verbose_name='تصویر بنر (موبایل - اختیاری)'
+    )
     link_url = models.URLField(verbose_name='لینک مقصد (وقتی کاربر روی بنر کلیک کند)')
     is_active = models.BooleanField(default=True, verbose_name='فعال')
     created_at = models.DateTimeField(auto_now_add=True)
