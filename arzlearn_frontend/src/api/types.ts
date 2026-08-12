@@ -83,9 +83,10 @@ export interface SocialLink {
 }
 
 export interface TopBanner {
-  id: number
-  image: string | null
+  image: string
+  image_mobile?: string | null   // این خط جدیده
   link_url: string
+  is_active: boolean
 }
 
 export interface Exchange {
