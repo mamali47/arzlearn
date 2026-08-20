@@ -1,6 +1,5 @@
 from django.contrib.sitemaps import Sitemap
 from django.conf import settings
-from django.conf import settings
 
 from .models import Article, Category
 
