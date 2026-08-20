@@ -1,4 +1,5 @@
 from django.contrib.sitemaps import Sitemap
+from django.conf import settings
 from .models import Article, Category
 
 
@@ -29,17 +30,13 @@ class CategorySitemap(Sitemap):
 
 class StaticViewSitemap(Sitemap):
     """صفحات ثابت سایت (صفحه اصلی، ورود، ثبت‌نام، درباره ما)."""
-
     changefreq = 'weekly'
     priority = 1.0
-
     def items(self):
         return ['home', 'login', 'register', 'about']
-
     def location(self, item):
-        base = settings.FRONTEND_BASE_URL.rstrip('/')
         paths = {'home': '/', 'login': '/login', 'register': '/register', 'about': '/about'}
-        return f'{base}{paths[item]}'
+        return paths[item]
 
 
 class PriceSitemap(Sitemap):
