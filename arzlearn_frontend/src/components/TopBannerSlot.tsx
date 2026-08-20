@@ -16,6 +16,7 @@ export default function TopBannerSlot() {
 
   return (
     
+      <a
       href={banner.link_url}
       target="_blank"
       rel="noopener noreferrer sponsored"
