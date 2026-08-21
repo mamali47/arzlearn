@@ -31,6 +31,9 @@ DISPLAY_NAMES = {
     'BTC': 'بیت کوین',
     'ETH': 'اتریوم',
     'SOL': 'سولانا',
+    'BNB': 'بایننس کوین',
+    'HYPE': 'هایپرلیکوئید',
+    'XAUT': 'طلا (تتر گلد)',
     'USD': 'دلار',
     'GOLD18': 'طلای ۱۸ عیار',
 }
@@ -39,10 +42,12 @@ CURRENCIES = {
     'BTC': 'USD',
     'ETH': 'USD',
     'SOL': 'USD',
+    'BNB': 'USD',
+    'HYPE': 'USD',
+    'XAUT': 'USD',
     'USD': 'IRR',
     'GOLD18': 'IRR',
 }
-
 
 def _to_decimal(value):
     """تبدیل امن یک مقدار (رشته یا عدد) به Decimal."""
@@ -58,7 +63,14 @@ def _to_decimal(value):
 # CoinGecko - بیت‌کوین، اتریوم، سولانا (دلاری)
 # --------------------------------------------------------------------------
 COINGECKO_URL = 'https://api.coingecko.com/api/v3/simple/price'
-COINGECKO_IDS = {'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana'}
+COINGECKO_IDS = {
+    'BTC': 'bitcoin',
+    'ETH': 'ethereum',
+    'SOL': 'solana',
+    'BNB': 'binancecoin',
+    'HYPE': 'hyperliquid',
+    'XAUT': 'tether-gold',
+}
 
 
 def fetch_coingecko_prices():
