@@ -15,6 +15,20 @@
   --max-width: 1240px;
 }
 
+[data-theme='dark'] {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #60a5fa;
+  --color-bg: #0f1117;
+  --color-surface: #181b24;
+  --color-text: #eef0f5;
+  --color-text-muted: #9aa1b0;
+  --color-border: #2a2e3a;
+  --color-success: #22c55e;
+  --color-danger: #f87171;
+  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.35);
+}
+
+
 * {
   box-sizing: border-box;
 }
