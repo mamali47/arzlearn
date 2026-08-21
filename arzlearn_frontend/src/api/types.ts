@@ -61,7 +61,7 @@ export interface Paginated<T> {
   results: T[]
 }
 
-export type PriceSymbol = 'BTC' | 'ETH' | 'SOL' | 'USD' | 'GOLD18'
+export type PriceSymbol = 'BTC' | 'ETH' | 'SOL' | 'BNB' | 'HYPE' | 'XAUT' | 'USD' | 'GOLD18'
 export type PriceCurrency = 'USD' | 'IRR'
 
 export interface Price {
