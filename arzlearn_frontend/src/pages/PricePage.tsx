@@ -15,6 +15,9 @@ const SYMBOL_ROUTES: Record<string, RouteInfo> = {
   bitcoin: { symbol: 'BTC', nameFa: 'بیت‌کوین' },
   ethereum: { symbol: 'ETH', nameFa: 'اتریوم' },
   solana: { symbol: 'SOL', nameFa: 'سولانا' },
+  bnb: { symbol: 'BNB', nameFa: 'بایننس کوین' },
+  hype: { symbol: 'HYPE', nameFa: 'هایپرلیکوئید' },
+  xaut: { symbol: 'XAUT', nameFa: 'طلا (تتر گلد)' },
   dollar: { symbol: 'USD', nameFa: 'دلار' },
   gold: { symbol: 'GOLD18', nameFa: 'طلای ۱۸ عیار' },
 }
