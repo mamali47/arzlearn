@@ -43,9 +43,7 @@ class StaticViewSitemap(Sitemap):
 class PriceSitemap(Sitemap):
     changefreq = 'daily'
     priority = 0.7
-
     def items(self):
-        return ['bitcoin', 'ethereum', 'solana', 'dollar', 'gold']
-
+        return ['bitcoin', 'ethereum', 'solana', 'bnb', 'hype', 'xaut', 'dollar', 'gold']
     def location(self, slug):
         return f'/price/{slug}'
