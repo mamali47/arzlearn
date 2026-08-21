@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { fetchCategories } from '../api/endpoints'
 import { useAuth } from '../context/AuthContext'
 import type { Category } from '../api/types'
+import ThemeToggle from './ThemeToggle'
 import './Header.css'
 
 export default function Header() {
@@ -102,6 +103,7 @@ export default function Header() {
 
         {/* سرچ + ورود/ثبت‌نام - دسکتاپ / خوش‌آمدید - موبایل */}
         <div className="header-actions">
+          <ThemeToggle />
           <form className="search-box" onSubmit={handleSearchSubmit}>
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
               <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
