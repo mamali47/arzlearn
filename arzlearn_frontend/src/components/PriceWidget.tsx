@@ -10,6 +10,9 @@ const SYMBOL_META: Record<PriceSymbol, { color: string; short: string; logo: str
   BTC: { color: '#f7931a', short: '₿', logo: '/coins/btc.png', pageSlug: 'bitcoin' },
   ETH: { color: '#627eea', short: 'Ξ', logo: '/coins/eth.png', pageSlug: 'ethereum' },
   SOL: { color: '#14f195', short: 'S', logo: '/coins/sol.png', pageSlug: 'solana' },
+  BNB: { color: '#f0b90b', short: 'B', logo: '/coins/bnb.png', pageSlug: 'bnb' },
+  HYPE: { color: '#7c3aed', short: 'H', logo: '/coins/hype.png', pageSlug: 'hype' },
+  XAUT: { color: '#d4af37', short: 'Au', logo: '/coins/xaut.png', pageSlug: 'xaut' },
   USD: { color: '#16a34a', short: '$', logo: '/coins/usd.png', pageSlug: 'dollar' },
   GOLD18: { color: '#d4af37', short: 'Au', logo: '/coins/gold.png', pageSlug: 'gold' },
 }
