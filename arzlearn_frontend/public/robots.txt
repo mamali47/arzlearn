@@ -1,5 +1,4 @@
 User-agent: *
 Allow: /
-
-# آدرس بک‌اند (Django) خودتون رو اینجا جایگزین کنید
+Disallow: /search
 Sitemap: https://arzlearn.ir/sitemap.xml
