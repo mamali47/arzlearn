@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    {% for tag in favicon %}{{ tag|safe }}{% endfor %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>{{ article.title }} | ارزلرن</title>
+    <meta name="description" content="{{ article.summary }}" />
+    <link rel="canonical" href="{{ canonical_url }}" />
+
+    <meta property="og:title" content="{{ article.title }}" />
+    <meta property="og:description" content="{{ article.summary }}" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="{{ canonical_url }}" />
+    <meta property="og:site_name" content="ارزلرن" />
+    {% if article.image %}<meta property="og:image" content="{{ site_url }}{{ article.image.url }}" />{% endif %}
+
+    <script type="application/ld+json">{{ json_ld|safe }}</script>
+    {% if faq_json_ld %}<script type="application/ld+json">{{ faq_json_ld|safe }}</script>{% endif %}
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5677NHH50"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-K5677NHH50');
+    </script>
+
+    {% for tag in styles %}{{ tag|safe }}{% endfor %}
+  </head>
+  <body>
+    <!--
+      این محتوا فقط برای اولین نگاهِ گوگل/شبکه‌های اجتماعی است. به محض اینکه
+      مرورگر جاوااسکریپت را اجرا کند، React همین div را با نسخه‌ی کامل و
+      تعاملی سایت جایگزین می‌کند؛ کاربر واقعی هیچ تفاوتی نمی‌بیند.
+    -->
+    <div id="root">
+      <article>
+        <h1>{{ article.title }}</h1>
+        <p>{{ article.summary }}</p>
+        {{ article.body|safe }}
+      </article>
+    </div>
+    {% for tag in scripts %}{{ tag|safe }}{% endfor %}
+  </body>
+</html>
