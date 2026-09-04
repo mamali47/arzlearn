@@ -16,6 +16,9 @@ ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', '127.0.0.1,localhost').split(','
 USE_X_FORWARDED_HOST = True
 SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
+SITE_URL = os.environ.get('SITE_URL', 'https://arzlearn.ir')
+FRONTEND_DIST_PATH = os.environ.get('FRONTEND_DIST_PATH', '')
+
 INSTALLED_APPS = [
     'daphne',
 
