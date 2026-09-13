@@ -68,7 +68,7 @@ export default function RegisterPage() {
     setSubmitting(true)
     try {
       await register(username, displayName, email, password, passwordConfirm)
-      navigate('/')
+      navigate('/check-email', { state: { email } })
     } catch (err) {
       const parsed = parseApiErrors(err)
       setFieldErrors(parsed.fields)
