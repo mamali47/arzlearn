@@ -147,12 +147,31 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 
 # --------------------------------------------------------------------------
-# آدرس عمومی فرانت‌اند - برای ساخت لینک مقالات در Sitemap، Schema.org و پیام‌های تلگرام
+# آدرس عمومی فرانت‌اند - برای ساخت لینک مقالات در Sitemap، Schema.org، پیام‌های
+# تلگرام و همچنین لینک‌های ایمیل تایید ایمیل / بازیابی رمز عبور
 # --------------------------------------------------------------------------
 FRONTEND_BASE_URL = os.environ.get('FRONTEND_BASE_URL', 'http://localhost:3000')
 
 # آدرس عمومی خودِ بک‌اند - برای ساخت لینک کامل عکس‌ها (مثلاً در Sitemap یا تلگرام)
 BACKEND_BASE_URL = os.environ.get('BACKEND_BASE_URL', 'http://127.0.0.1:8000')
+
+# --------------------------------------------------------------------------
+# ایمیل - برای ارسال ایمیل تایید ایمیل و بازیابی رمز عبور
+# --------------------------------------------------------------------------
+# سرویس پیشنهادی: Brevo (رایگان تا ۳۰۰ ایمیل در روز) - https://www.brevo.com
+# بعد از ساخت حساب: SMTP & API > SMTP، مقادیر Login و Master Password (SMTP Key)
+# را در فایل .env قرار بده. ایمیل فرستنده (DEFAULT_FROM_EMAIL) باید در پنل
+# Brevo تایید (verify) شده باشد وگرنه ارسال ایمیل رد می‌شود.
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'smtp-relay.brevo.com')
+EMAIL_PORT = int(os.environ.get('EMAIL_PORT', '587'))
+EMAIL_USE_TLS = os.environ.get('EMAIL_USE_TLS', 'True') == 'True'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', '')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', '')
+DEFAULT_FROM_EMAIL = os.environ.get('DEFAULT_FROM_EMAIL', 'no-reply@arzlearn.ir')
+
+# مدت اعتبار لینک بازیابی رمز عبور (بر حسب ثانیه). ۳۶۰۰ = ۱ ساعت.
+PASSWORD_RESET_TIMEOUT = 3600
 
 # --------------------------------------------------------------------------
 # تلگرام - برای پست خودکار مقالات در کانال
@@ -189,13 +208,15 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 12,
-    # محدودسازی نرخ درخواست - دفاع در برابر brute-force روی ورود/ثبت‌نام
+    # محدودسازی نرخ درخواست - دفاع در برابر brute-force روی ورود/ثبت‌نام/بازیابی رمز
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.ScopedRateThrottle',
     ],
     'DEFAULT_THROTTLE_RATES': {
         'login': '10/min',
         'register': '5/min',
+        'password_reset': '5/min',
+        'email_verification': '5/min',
     },
 }
 
@@ -261,4 +282,3 @@ if not DEBUG:
     X_FRAME_OPTIONS = 'DENY'
     SESSION_COOKIE_HTTPONLY = True
     CSRF_COOKIE_HTTPONLY = False
-
