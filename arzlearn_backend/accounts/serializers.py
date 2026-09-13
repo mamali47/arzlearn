@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate
 from django.contrib.auth.password_validation import validate_password
+from django.contrib.auth.tokens import default_token_generator
 from django.core.exceptions import ValidationError as DjangoValidationError
+from django.utils.encoding import force_str
+from django.utils.http import urlsafe_base64_decode
 from rest_framework import serializers
 
 from .models import CustomUser
@@ -98,6 +101,60 @@ class LoginSerializer(serializers.Serializer):
             raise serializers.ValidationError('نام کاربری/ایمیل یا رمز عبور اشتباه است.')
         if not user.is_active:
             raise serializers.ValidationError('این حساب کاربری غیرفعال است.')
+
+        attrs['user'] = user
+        return attrs
+
+
+class EmailVerificationConfirmSerializer(serializers.Serializer):
+    """
+    تایید ایمیل با توکنی که در لینک ارسال‌شده به ایمیل کاربر قرار دارد.
+    """
+
+    token = serializers.CharField()
+
+
+class PasswordResetRequestSerializer(serializers.Serializer):
+    """
+    درخواست ارسال ایمیل بازیابی رمز عبور.
+    """
+
+    email = serializers.EmailField()
+
+
+class PasswordResetConfirmSerializer(serializers.Serializer):
+    """
+    تایید نهایی بازیابی رمز عبور با uid و توکنی که در لینک ایمیل ارسال شده است.
+    از django.contrib.auth.tokens.default_token_generator استفاده می‌کند که
+    توکن استاندارد و امن خود جنگو است (بعد از تغییر رمز عبور خودکار باطل می‌شود).
+    """
+
+    uid = serializers.CharField()
+    token = serializers.CharField()
+    new_password = serializers.CharField(write_only=True, style={'input_type': 'password'})
+    new_password_confirm = serializers.CharField(write_only=True, style={'input_type': 'password'})
+
+    def validate(self, attrs):
+        if attrs['new_password'] != attrs['new_password_confirm']:
+            raise serializers.ValidationError(
+                {'new_password_confirm': 'رمز عبور و تکرار آن یکسان نیستند.'}
+            )
+
+        try:
+            uid = force_str(urlsafe_base64_decode(attrs['uid']))
+            user = CustomUser.objects.get(pk=uid)
+        except (TypeError, ValueError, OverflowError, CustomUser.DoesNotExist):
+            raise serializers.ValidationError('لینک بازیابی رمز عبور نامعتبر است.')
+
+        if not default_token_generator.check_token(user, attrs['token']):
+            raise serializers.ValidationError(
+                'این لینک نامعتبر یا منقضی شده است. لطفاً دوباره درخواست بازیابی رمز عبور بدهید.'
+            )
+
+        try:
+            validate_password(attrs['new_password'], user=user)
+        except DjangoValidationError as exc:
+            raise serializers.ValidationError({'new_password': list(exc.messages)})
 
         attrs['user'] = user
         return attrs
