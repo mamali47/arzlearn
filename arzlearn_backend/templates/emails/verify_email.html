@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="fa">
+<head>
+  <meta charset="UTF-8">
+  <title>تایید ایمیل</title>
+</head>
+<body style="font-family: Tahoma, Arial, sans-serif; background:#f5f5f5; padding:24px; margin:0;">
+  <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:8px;padding:24px;">
+    <h2 style="color:#222222;">تایید ایمیل شما در ارزلرن</h2>
+    <p style="color:#444444;">سلام {{ user.get_public_name }}،</p>
+    <p style="color:#444444;">برای تکمیل ثبت‌نام و تایید ایمیل خود، روی دکمه‌ی زیر کلیک کنید:</p>
+    <p style="text-align:center;margin:32px 0;">
+      <a href="{{ verify_url }}"
+         style="background:#2e7d32;color:#ffffff;padding:12px 28px;border-radius:6px;text-decoration:none;display:inline-block;">
+        تایید ایمیل
+      </a>
+    </p>
+    <p style="color:#777777;font-size:13px;">
+      اگر دکمه کار نکرد، این لینک را در مرورگر خود باز کنید:<br>
+      <a href="{{ verify_url }}" style="color:#2e7d32;">{{ verify_url }}</a>
+    </p>
+    <p style="color:#999999;font-size:12px;margin-top:24px;">
+      این لینک تا ۲۴ ساعت معتبر است. اگر شما این درخواست را نداده‌اید، همین کافی است این ایمیل را نادیده بگیرید.
+    </p>
+  </div>
+</body>
+</html>
