@@ -43,6 +43,31 @@ export async function fetchMe(): Promise<User> {
   return data
 }
 
+export async function requestPasswordReset(email: string): Promise<{ detail: string }> {
+  const { data } = await apiClient.post<{ detail: string }>('/accounts/password-reset/', { email })
+  return data
+}
+
+export async function confirmPasswordReset(payload: {
+  uid: string
+  token: string
+  new_password: string
+  new_password_confirm: string
+}): Promise<{ detail: string }> {
+  const { data } = await apiClient.post<{ detail: string }>('/accounts/password-reset-confirm/', payload)
+  return data
+}
+
+export async function verifyEmail(token: string): Promise<{ detail: string }> {
+  const { data } = await apiClient.post<{ detail: string }>('/accounts/verify-email/', { token })
+  return data
+}
+
+export async function resendVerificationEmail(): Promise<{ detail: string }> {
+  const { data } = await apiClient.post<{ detail: string }>('/accounts/resend-verification/')
+  return data
+}
+
 // ---------------- articles ----------------
 export async function fetchCategories(): Promise<Category[]> {
   const { data } = await apiClient.get<Category[]>('/articles/categories/')
