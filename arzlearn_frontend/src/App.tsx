@@ -12,6 +12,7 @@ const RegisterPage = lazy(() => import('./pages/RegisterPage'))
 const ForgotPasswordPage = lazy(() => import('./pages/ForgotPasswordPage'))
 const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage'))
 const VerifyEmailPage = lazy(() => import('./pages/VerifyEmailPage'))
+const CheckEmailPage = lazy(() => import('./pages/CheckEmailPage'))
 const SearchPage = lazy(() => import('./pages/SearchPage'))
 const EconomicCalendarPage = lazy(() => import('./pages/EconomicCalendarPage'))
 const PricePage = lazy(() => import('./pages/PricePage'))
@@ -36,6 +37,7 @@ export default function App() {
           <Route path="/forgot-password" element={<ForgotPasswordPage />} />
           <Route path="/reset-password" element={<ResetPasswordPage />} />
           <Route path="/verify-email" element={<VerifyEmailPage />} />
+          <Route path="/check-email" element={<CheckEmailPage />} />
           <Route path="/economic-calendar" element={<EconomicCalendarPage />} />
           <Route path="/price/:slug" element={<PricePage />} />
           <Route path="/about" element={<AboutPage />} />
