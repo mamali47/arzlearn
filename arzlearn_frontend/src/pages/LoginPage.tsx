@@ -55,6 +55,9 @@ export default function LoginPage() {
               onChange={(e) => setPassword(e.target.value)}
               required
             />
+            <p className="auth-field__hint">
+              <Link to="/forgot-password">رمز عبور را فراموش کرده‌اید؟</Link>
+            </p>
           </div>
 
           <button type="submit" className="btn btn-primary auth-submit" disabled={submitting}>
