@@ -67,7 +67,8 @@ class CategoryArticlesAPIView(generics.ListAPIView):
 class LatestNewsAPIView(generics.ListAPIView):
     """
     GET /api/articles/latest-news/
-    سکشن هیرو صفحه اصلی: ۳ آخرین مقاله دسته‌بندی «اخبار» (به‌همراه زیردسته‌هایش).
+    سکشن هیرو صفحه اصلی: ۹ آخرین مقاله دسته‌بندی «اخبار» (به‌همراه زیردسته‌هایش)
+    که در قالب اسلایدر قابل‌جابجایی نمایش داده می‌شوند.
     """
 
     serializer_class = ArticleListSerializer
@@ -83,7 +84,7 @@ class LatestNewsAPIView(generics.ListAPIView):
             Article.objects.filter(category_id__in=category_ids, status='published')
             .select_related('category')
             .prefetch_related('main_tags')
-            .order_by('-published_at')[:3]
+            .order_by('-published_at')[:9]
         )
 
 
