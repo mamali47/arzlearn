@@ -30,12 +30,14 @@ export default function NewsCarousel({ items, viewAllHref }: Props) {
         <div className="news-carousel__title-group">
           <h2 className="section-title">آخرین اخبار</h2>
           <div className="news-carousel__arrows">
-            <button aria-label="خبر بعدی" onClick={() => goTo(activeIndex + 1)}>
+            {/* آیکون و لیبل این دکمه دست‌نخورده مونده - فقط جهت حرکتش (goTo) عوض شده */}
+            <button aria-label="خبر بعدی" onClick={() => goTo(activeIndex - 1)}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
-            <button aria-label="خبر قبلی" onClick={() => goTo(activeIndex - 1)}>
+            {/* آیکون و لیبل این دکمه دست‌نخورده مونده - فقط جهت حرکتش (goTo) عوض شده */}
+            <button aria-label="خبر قبلی" onClick={() => goTo(activeIndex + 1)}>
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
                 <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
