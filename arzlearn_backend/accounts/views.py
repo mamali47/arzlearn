@@ -116,6 +116,7 @@ class VerifyEmailAPIView(APIView):
     """
 
     permission_classes = [permissions.AllowAny]
+    throttle_scope = 'email_verification'
 
     def post(self, request):
         serializer = EmailVerificationConfirmSerializer(data=request.data)
