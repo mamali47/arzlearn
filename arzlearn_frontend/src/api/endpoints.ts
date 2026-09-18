@@ -15,14 +15,18 @@ import type {
 } from './types'
 
 // ---------------- accounts ----------------
+
+// توجه: ثبت‌نام دیگر اکانت نمی‌سازد و توکنی برنمی‌گرداند — فقط یک ایمیل
+// تایید می‌فرستد. اکانت واقعی فقط با verifyEmail (بعد از کلیک روی لینک
+// ایمیل) ساخته می‌شود.
 export async function registerUser(payload: {
   username: string
   display_name: string
   email: string
   password: string
   password_confirm: string
-}): Promise<AuthResponse> {
-  const { data } = await apiClient.post<AuthResponse>('/accounts/register/', payload)
+}): Promise<{ detail: string }> {
+  const { data } = await apiClient.post<{ detail: string }>('/accounts/register/', payload)
   return data
 }
 
@@ -58,13 +62,10 @@ export async function confirmPasswordReset(payload: {
   return data
 }
 
-export async function verifyEmail(token: string): Promise<{ detail: string }> {
-  const { data } = await apiClient.post<{ detail: string }>('/accounts/verify-email/', { token })
-  return data
-}
-
-export async function resendVerificationEmail(): Promise<{ detail: string }> {
-  const { data } = await apiClient.post<{ detail: string }>('/accounts/resend-verification/')
+// توجه: حالا که تایید ایمیل همان لحظه‌ی ساخت اکانت است، این تابع دیگر
+// {detail} برنمی‌گرداند بلکه (مثل ورود) توکن و اطلاعات کاربر را برمی‌گرداند.
+export async function verifyEmail(token: string): Promise<AuthResponse> {
+  const { data } = await apiClient.post<AuthResponse>('/accounts/verify-email/', { token })
   return data
 }
 
