@@ -1,5 +1,5 @@
 """
-توابع کمکی برای ارسال ایمیل‌های تایید ایمیل و بازیابی رمز عبور.
+توابع کمکی برای ارسال ایمیل‌های تایید ایمیل (ثبت‌نام) و بازیابی رمز عبور.
 از تنظیمات SMTP که در settings.py (متغیرهای محیطی EMAIL_*) مشخص شده استفاده می‌کند.
 """
 
@@ -9,17 +9,21 @@ from django.template.loader import render_to_string
 from django.utils.html import strip_tags
 
 
-def send_verification_email(user, token: str) -> None:
+def send_verification_email(email: str, display_name: str, token: str) -> None:
+    """
+    توجه: چون در این مرحله هنوز کاربری در دیتابیس ساخته نشده (ثبت‌نام معلق
+    است)، به‌جای یک آبجکت User، مستقیماً ایمیل و نام نمایشی را می‌گیریم.
+    """
     verify_url = f"{settings.FRONTEND_BASE_URL}/verify-email?token={token}"
     html_message = render_to_string(
         'emails/verify_email.html',
-        {'user': user, 'verify_url': verify_url},
+        {'display_name': display_name, 'verify_url': verify_url},
     )
     send_mail(
         subject='تایید ایمیل - ارزلرن',
         message=strip_tags(html_message),
         from_email=settings.DEFAULT_FROM_EMAIL,
-        recipient_list=[user.email],
+        recipient_list=[email],
         html_message=html_message,
         fail_silently=False,
     )
