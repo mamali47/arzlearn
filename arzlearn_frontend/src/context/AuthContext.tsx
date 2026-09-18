@@ -1,5 +1,5 @@
 import { createContext, useContext, useEffect, useState, type ReactNode } from 'react'
-import { fetchMe, loginUser, logoutUser, registerUser } from '../api/endpoints'
+import { fetchMe, loginUser, logoutUser, registerUser, verifyEmail } from '../api/endpoints'
 import { TOKEN_STORAGE_KEY } from '../api/client'
 import type { User } from '../api/types'
 
@@ -13,7 +13,8 @@ interface AuthContextValue {
     email: string,
     password: string,
     passwordConfirm: string
-  ) => Promise<void>
+  ) => Promise<{ detail: string }>
+  completeEmailVerification: (token: string) => Promise<User>
   logout: () => Promise<void>
 }
 
@@ -51,15 +52,23 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     password: string,
     passwordConfirm: string
   ) {
-    const data = await registerUser({
+    // توجه: ثبت‌نام دیگر اکانتی نمی‌سازد و توکنی برنمی‌گرداند — فقط یک
+    // ایمیل تایید می‌فرستد. اکانت واقعی فقط بعد از کلیک روی لینک ایمیل
+    // (completeEmailVerification) ساخته و کاربر خودکار لاگین می‌شود.
+    return registerUser({
       username,
       display_name: displayName,
       email,
       password,
       password_confirm: passwordConfirm,
     })
+  }
+
+  async function completeEmailVerification(token: string) {
+    const data = await verifyEmail(token)
     localStorage.setItem(TOKEN_STORAGE_KEY, data.token)
     setUser(data.user)
+    return data.user
   }
 
   async function logout() {
@@ -72,7 +81,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider value={{ user, isLoading, login, register, logout }}>
+    <AuthContext.Provider
+      value={{ user, isLoading, login, register, completeEmailVerification, logout }}
+    >
       {children}
     </AuthContext.Provider>
   )
