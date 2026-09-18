@@ -7,7 +7,7 @@
 <body style="font-family: Tahoma, Arial, sans-serif; background:#f5f5f5; padding:24px; margin:0;">
   <div style="max-width:480px;margin:0 auto;background:#ffffff;border-radius:8px;padding:24px;">
     <h2 style="color:#222222;">تایید ایمیل شما در ارزلرن</h2>
-    <p style="color:#444444;">سلام {{ user.get_public_name }}،</p>
+    <p style="color:#444444;">سلام {{ display_name }}،</p>
     <p style="color:#444444;">برای تکمیل ثبت‌نام و تایید ایمیل خود، روی دکمه‌ی زیر کلیک کنید:</p>
     <p style="text-align:center;margin:32px 0;">
       <a href="{{ verify_url }}"
