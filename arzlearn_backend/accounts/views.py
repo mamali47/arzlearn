@@ -1,3 +1,4 @@
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.tokens import default_token_generator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_encode
@@ -16,34 +17,44 @@ from .serializers import (
     RegisterSerializer,
     UserSerializer,
 )
-from .tokens import make_email_verification_token, read_email_verification_token
+from .tokens import make_pending_registration_token, read_pending_registration_token
 
 
-class RegisterAPIView(generics.CreateAPIView):
+class RegisterAPIView(APIView):
     """
     POST /api/accounts/register/
-    body: { "username": "...", "email": "...", "password": "...", "password_confirm": "..." }
+    body: { "username": "...", "display_name": "...", "email": "...", "password": "...", "password_confirm": "..." }
+
+    مهم: این مرحله هیچ کاربری در دیتابیس نمی‌سازد! فقط اطلاعات را اعتبارسنجی
+    می‌کند، هش رمز عبور را داخل یک توکن امضاشده جا می‌دهد و برایش یک ایمیل
+    تایید می‌فرستد. کاربر فقط وقتی روی لینک ایمیلش کلیک کند (VerifyEmailAPIView)
+    واقعاً در دیتابیس ساخته می‌شود. اگر هیچ‌وقت لینک را نزند، هیچ اکانتی
+    برایش باقی نمی‌ماند.
     """
 
-    queryset = CustomUser.objects.all()
-    serializer_class = RegisterSerializer
     permission_classes = [permissions.AllowAny]
     throttle_scope = 'register'
 
-    def create(self, request, *args, **kwargs):
-        serializer = self.get_serializer(data=request.data)
+    def post(self, request):
+        serializer = RegisterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        user = serializer.save()
-        token, _created = Token.objects.get_or_create(user=user)
+        data = serializer.validated_data
 
-        # بلافاصله بعد از ثبت‌نام یک ایمیل تایید برای کاربر ارسال می‌شود
-        verification_token = make_email_verification_token(user)
-        send_verification_email(user, verification_token)
+        payload = {
+            'username': data['username'],
+            'display_name': data['display_name'],
+            'email': data['email'],
+            'password_hash': make_password(data['password']),
+        }
+        token = make_pending_registration_token(payload)
+        send_verification_email(email=data['email'], display_name=data['display_name'], token=token)
 
         return Response(
             {
-                'token': token.key,
-                'user': UserSerializer(user).data,
+                'detail': (
+                    'یک ایمیل تایید برایتان ارسال شد. برای تکمیل ثبت‌نام، '
+                    'روی لینک داخل ایمیل کلیک کنید.'
+                )
             },
             status=status.HTTP_201_CREATED,
         )
@@ -94,31 +105,14 @@ class MeAPIView(generics.RetrieveAPIView):
         return self.request.user
 
 
-class ResendVerificationEmailAPIView(APIView):
-    """
-    POST /api/accounts/resend-verification/  (نیاز به هدر Authorization: Token <token>)
-    برای وقتی که کاربر ایمیل اولش را گم کرده یا منقضی شده است.
-    """
-
-    permission_classes = [permissions.IsAuthenticated]
-    throttle_scope = 'email_verification'
-
-    def post(self, request):
-        user = request.user
-        if user.is_email_verified:
-            return Response(
-                {'detail': 'ایمیل شما قبلاً تایید شده است.'},
-                status=status.HTTP_400_BAD_REQUEST,
-            )
-        token = make_email_verification_token(user)
-        send_verification_email(user, token)
-        return Response({'detail': 'ایمیل تایید دوباره ارسال شد.'})
-
-
 class VerifyEmailAPIView(APIView):
     """
     POST /api/accounts/verify-email/
     body: { "token": "..." }
+
+    اینجاست که کاربر واقعاً در دیتابیس ساخته می‌شود. بعد از ساخت، برای
+    تجربه‌ی بهتر، بلافاصله یک توکن ورود هم برمی‌گردانیم تا کاربر خودکار
+    لاگین شود (نیازی نیست دوباره با رمز عبورش وارد شود).
     """
 
     permission_classes = [permissions.AllowAny]
@@ -128,21 +122,44 @@ class VerifyEmailAPIView(APIView):
         serializer.is_valid(raise_exception=True)
         token = serializer.validated_data['token']
 
-        user_id = read_email_verification_token(token)
-        if user_id is None:
+        payload = read_pending_registration_token(token)
+        if payload is None:
             return Response(
-                {'detail': 'این لینک نامعتبر یا منقضی شده است.'},
+                {'detail': 'این لینک نامعتبر یا منقضی شده است. لطفاً دوباره ثبت‌نام کنید.'},
                 status=status.HTTP_400_BAD_REQUEST,
             )
 
-        try:
-            user = CustomUser.objects.get(pk=user_id)
-        except CustomUser.DoesNotExist:
-            return Response({'detail': 'لینک نامعتبر است.'}, status=status.HTTP_400_BAD_REQUEST)
+        username = payload.get('username')
+        email = payload.get('email')
 
-        user.is_email_verified = True
-        user.save(update_fields=['is_email_verified'])
-        return Response({'detail': 'ایمیل با موفقیت تایید شد.'})
+        # جلوگیری از تداخل: بررسی دوباره که در فاصله‌ی بین ثبت‌نام و تایید،
+        # شخص دیگری همین نام‌کاربری/ایمیل را (با تایید ایمیل خودش) نگرفته باشد.
+        if CustomUser.objects.filter(username__iexact=username).exists():
+            return Response(
+                {'detail': 'این نام کاربری در همین حین توسط شخص دیگری ثبت شده است. لطفاً دوباره ثبت‌نام کنید.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+        if CustomUser.objects.filter(email__iexact=email).exists():
+            return Response(
+                {'detail': 'این ایمیل در همین حین توسط شخص دیگری ثبت شده است. لطفاً دوباره ثبت‌نام کنید.'},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        user = CustomUser(
+            username=username,
+            display_name=payload.get('display_name', ''),
+            email=email,
+            is_email_verified=True,
+        )
+        user.password = payload['password_hash']  # از قبل با make_password هش شده
+        user.save()
+
+        auth_token, _created = Token.objects.get_or_create(user=user)
+
+        return Response({
+            'token': auth_token.key,
+            'user': UserSerializer(user).data,
+        })
 
 
 class PasswordResetRequestAPIView(APIView):
