@@ -48,3 +48,13 @@ def regenerate_static_page(sender, instance, **kwargs):
         call_command('generate_static_pages', slug=instance.slug)
     except Exception:
         logger.exception('ساخت صفحه‌ی از پیش‌رندرشده برای مقاله «%s» با خطا مواجه شد.', instance.slug)
+        
+    # صفحه‌ی اصلی و صفحات دسته‌بندی هم فهرست مقالات را در HTML خودشان دارند؛
+    # اگر فقط صفحه‌ی خود مقاله ساخته شود، خزنده روی صفحه‌ی اصلی همچنان
+    # فهرست قدیمی را می‌بیند و مقاله‌ی تازه دیرتر کشف می‌شود.
+    # هر کدام یک صفحه است و رندرشان چند دهم ثانیه طول می‌کشد.
+    try:
+        call_command('generate_static_pages', only='home')
+        call_command('generate_static_pages', only='categories')
+    except Exception:
+        logger.exception('بازسازی صفحه‌ی اصلی و دسته‌بندی‌ها با خطا مواجه شد.')
