@@ -2,30 +2,104 @@
 <html lang="fa" dir="rtl">
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <link rel="icon" type="image/png" href="/favicon.png" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+
+    <title>ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال، دلار و طلا</title>
     <meta
       name="description"
-      content="مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا در ارزلرن."
+      content="مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا؛ همراه با معرفی صرافی‌ها، تقویم اقتصادی و آموزش‌های کاربردی بازار."
     />
-    <title>ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال</title>
+    <link rel="canonical" href="https://arzlearn.ir/" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="author" content="ارزلرن" />
+
+    <!-- رنگ نوار مرورگر روی موبایل؛ ThemeContext با تغییر تم بروزش می‌کند -->
+    <meta name="theme-color" content="#f4f6fb" />
+    <meta name="color-scheme" content="light dark" />
+
+    <link rel="alternate" hreflang="fa-IR" href="https://arzlearn.ir/" />
+    <link rel="alternate" hreflang="x-default" href="https://arzlearn.ir/" />
+    <link rel="alternate" type="application/rss+xml" title="آخرین مطالب ارزلرن" href="/rss.xml" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+
+    <meta property="og:locale" content="fa_IR" />
+    <meta property="og:site_name" content="ارزلرن" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال" />
+    <meta
+      property="og:description"
+      content="مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا."
+    />
+    <meta property="og:url" content="https://arzlearn.ir/" />
+    <meta property="og:image" content="https://arzlearn.ir/logo.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال" />
+    <meta name="twitter:image" content="https://arzlearn.ir/logo.png" />
 
     <!--
       تایید مالکیت سایت در Google Search Console:
-      بعد از ثبت سایت در https://search.google.com/search-console یک کد
-      تایید (verification code) به شما داده می‌شود؛ آن را در content= زیر
-      جایگزین کنید و این خط کامنت را بردارید.
+      کد را در content زیر بگذار و کامنت را بردار.
     -->
-    <!-- <meta name="google-site-verification" content="کد-تایید-خودتان-را-اینجا-بگذارید" /> -->
+    <!-- <meta name="google-site-verification" content="کد-تایید-گوگل" /> -->
 
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="dns-prefetch" href="https://www.googletagmanager.com" />
     <link
       href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
     />
 
+    <!--
+      جلوگیری از «پرش تم»: قبل از رندر شدن ری‌اکت، تم ذخیره‌شده روی
+      <html> ست می‌شود تا کاربر یک لحظه صفحه‌ی سفید نبیند (روی موبایل
+      خیلی محسوس است و در امتیاز CLS هم اثر دارد).
+    -->
+    <script>
+      (function () {
+        var theme = 'light';
+        try {
+          var saved = localStorage.getItem('arzlearn-theme');
+          if (saved === 'dark' || saved === 'light') theme = saved;
+        } catch (e) {}
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
 
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Organization",
+            "@id": "https://arzlearn.ir/#organization",
+            "name": "ارزلرن",
+            "alternateName": "Arzlearn",
+            "url": "https://arzlearn.ir/",
+            "logo": { "@type": "ImageObject", "url": "https://arzlearn.ir/logo.png" }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://arzlearn.ir/#website",
+            "name": "ارزلرن",
+            "url": "https://arzlearn.ir/",
+            "inLanguage": "fa-IR",
+            "publisher": { "@id": "https://arzlearn.ir/#organization" },
+            "potentialAction": {
+              "@type": "SearchAction",
+              "target": {
+                "@type": "EntryPoint",
+                "urlTemplate": "https://arzlearn.ir/search?q={search_term_string}"
+              },
+              "query-input": "required name=search_term_string"
+            }
+          }
+        ]
+      }
+    </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5677NHH50"></script>
     <script>
@@ -34,10 +108,14 @@
       gtag('js', new Date());
       gtag('config', 'G-K5677NHH50');
     </script>
-
   </head>
   <body>
     <div id="root"></div>
+    <noscript>
+      برای استفاده از ارزلرن جاوااسکریپت مرورگرتان را فعال کنید. جدیدترین
+      مطالب را می‌توانید از <a href="/sitemap.xml">نقشه سایت</a> یا
+      <a href="/rss.xml">فید RSS</a> دنبال کنید.
+    </noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

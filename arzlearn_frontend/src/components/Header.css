@@ -1,9 +1,20 @@
 .site-header {
-  background: var(--color-surface);
+  /* هدر چسبان با پس‌زمینه‌ی نیمه‌شفاف و بلور — روی موبایل حس بومی‌تری دارد
+     و همیشه دسترسی به منو و جستجو را نگه می‌دارد. */
+  background: color-mix(in srgb, var(--color-surface) 88%, transparent);
+  backdrop-filter: saturate(180%) blur(14px);
+  -webkit-backdrop-filter: saturate(180%) blur(14px);
   border-bottom: 1px solid var(--color-border);
   position: sticky;
   top: 0;
   z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .site-header {
+    background: var(--color-surface);
+  }
 }
 
 .site-header__inner {
@@ -48,6 +59,18 @@
   height: 2px;
   border-radius: 2px;
   background: var(--color-text);
+  transition: transform 0.22s ease, opacity 0.18s ease;
+}
+
+/* همبرگری هنگام باز بودن منو تبدیل به ضربدر می‌شود */
+.hamburger-btn--open span:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+.hamburger-btn--open span:nth-child(2) {
+  opacity: 0;
+}
+.hamburger-btn--open span:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
 }
 
 /* -------- منوی دسته‌بندی دسکتاپ -------- */
@@ -188,11 +211,47 @@
     gap: 0;
   }
 
+  .mobile-menu__backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    border: none;
+    padding: 0;
+    background: rgba(8, 10, 16, 0.5);
+    animation: mobile-menu-fade 0.18s ease;
+    cursor: default;
+  }
+
   .mobile-menu {
     display: block;
+    position: relative;
+    z-index: 55;
     background: var(--color-surface);
     border-top: 1px solid var(--color-border);
-    padding: 16px 20px 24px;
+    padding: 16px 20px calc(24px + env(safe-area-inset-bottom, 0px));
+    /* کشو هیچ‌وقت از ارتفاع صفحه بیشتر نشود؛ داخل خودش اسکرول می‌خورد */
+    max-height: calc(100dvh - var(--header-height) - env(safe-area-inset-top, 0px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    box-shadow: 0 18px 40px rgba(8, 10, 16, 0.22);
+    animation: mobile-menu-slide 0.2s ease;
+  }
+
+  @keyframes mobile-menu-fade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes mobile-menu-slide {
+    from { opacity: 0; transform: translateY(-8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .mobile-menu,
+    .mobile-menu__backdrop {
+      animation: none;
+    }
   }
 
   .search-box.mobile {
@@ -220,7 +279,10 @@
 
   .mobile-categories__row a {
     flex: 1;
-    display: block;
+    display: flex;
+    align-items: center;
+    /* حداقل ۴۴ پیکسل ارتفاع: استاندارد اندازه‌ی هدف لمسی در اپل و گوگل */
+    min-height: 44px;
     padding: 10px 4px;
     font-weight: 700;
   }
@@ -229,8 +291,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 32px;
-    height: 32px;
+    width: 44px;
+    height: 44px;
     background: none;
     border: none;
     color: var(--color-text-muted);
@@ -250,7 +312,9 @@
   }
 
   .mobile-categories ul li a {
-    display: block;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
     padding: 8px 4px;
     font-size: 13.5px;
     color: var(--color-text-muted);
@@ -265,5 +329,12 @@
 
   .mobile-auth__logout {
     width: 100%;
+  }
+}
+
+/* فرم جستجوی هدر روی تبلت کمی جمع‌تر شود تا منو جا بیفتد */
+@media (max-width: 1100px) and (min-width: 901px) {
+  .search-box {
+    min-width: 130px;
   }
 }

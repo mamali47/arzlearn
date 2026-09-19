@@ -4,6 +4,7 @@ import { confirmPasswordReset } from '../api/endpoints'
 import { parseApiErrors } from '../utils/apiError'
 import PasswordInput from '../components/PasswordInput'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 function getPasswordIssues(password: string): string[] {
   const issues: string[] = []
@@ -15,6 +16,13 @@ function getPasswordIssues(password: string): string[] {
 }
 
 export default function ResetPasswordPage() {
+  useSEO({
+    title: 'تعیین رمز عبور جدید',
+    description: 'تعیین رمز عبور جدید برای حساب کاربری ارزلرن.',
+    url: '/reset-password',
+    noindex: true,
+  })
+
   const [searchParams] = useSearchParams()
   const uid = searchParams.get('uid') || ''
   const token = searchParams.get('token') || ''

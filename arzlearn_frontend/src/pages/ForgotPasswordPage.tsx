@@ -3,8 +3,16 @@ import { Link } from 'react-router-dom'
 import { requestPasswordReset } from '../api/endpoints'
 import { parseApiErrors } from '../utils/apiError'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 export default function ForgotPasswordPage() {
+  useSEO({
+    title: 'فراموشی رمز عبور',
+    description: 'بازیابی رمز عبور حساب کاربری ارزلرن.',
+    url: '/forgot-password',
+    noindex: true,
+  })
+
   const [email, setEmail] = useState('')
   const [submitting, setSubmitting] = useState(false)
   const [message, setMessage] = useState<string | null>(null)

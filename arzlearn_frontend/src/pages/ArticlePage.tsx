@@ -43,6 +43,9 @@ export default function ArticlePage() {
     title: article?.title,
     description: article?.summary,
     image: article?.image ?? undefined,
+    url: article ? `/article/${article.slug}` : undefined,
+    type: 'article',
+    publishedTime: article?.published_at,
     structuredData: article
       ? [
           buildArticleSchema(article),
@@ -87,7 +90,7 @@ export default function ArticlePage() {
 
         {article.image && (
           <div className="article-page__image">
-            <img src={article.image} alt={article.title} loading="lazy" />
+            <img src={article.image} alt={article.title} width={1200} height={675} fetchPriority="high" decoding="async" />
           </div>
         )}
 

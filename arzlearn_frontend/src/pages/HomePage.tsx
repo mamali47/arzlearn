@@ -8,7 +8,7 @@ import ExchangeCarousel from '../components/ExchangeCarousel'
 import EconomicCalendarSection from '../components/EconomicCalendarSection'
 import AdSlot from '../components/AdSlot'
 import { useSEO } from '../hooks/useSEO'
-import { buildOrganizationSchema, buildWebsiteSchema } from '../utils/seo'
+import { buildItemListSchema, buildOrganizationSchema, buildWebsiteSchema } from '../utils/seo'
 import type { ArticleListItem, Exchange } from '../api/types'
 import './HomePage.css'
 
@@ -19,8 +19,14 @@ export default function HomePage() {
   const [isLoading, setIsLoading] = useState(true)
 
   useSEO({
-    description: 'اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا در ارزلرن.',
-    structuredData: [buildOrganizationSchema(), buildWebsiteSchema()],
+    url: '/',
+    description:
+      'مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا؛ همراه با معرفی صرافی‌ها، تقویم اقتصادی و آموزش‌های کاربردی بازار.',
+    structuredData: [
+      buildOrganizationSchema(),
+      buildWebsiteSchema(),
+      ...(news.length > 0 ? [buildItemListSchema(news, 'آخرین اخبار ارزهای دیجیتال')] : []),
+    ],
   })
 
   useEffect(() => {
@@ -45,6 +51,15 @@ export default function HomePage() {
 
   return (
     <div className="home-page container">
+      {/*
+        هر صفحه باید دقیقاً یک h1 داشته باشد که موضوع صفحه را می‌گوید.
+        صفحه‌ی اصلی قبلاً هیچ h1 نداشت و اولین تیتر صفحه h2 «آخرین اخبار»
+        بود؛ یعنی گوگل هیچ سیگنال روشنی از موضوع صفحه‌ی اصلی نمی‌گرفت.
+      */}
+      <h1 className="home-page__lead">
+        ارزلرن؛ اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال، دلار و طلا
+      </h1>
+
       <NewsCarousel items={news} viewAllHref={newsCategorySlug ? `/category/${newsCategorySlug}` : undefined} />
 
       <AdSlot slotId="home-hero" />

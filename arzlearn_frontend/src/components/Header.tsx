@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { fetchCategories } from '../api/endpoints'
 import { useAuth } from '../context/AuthContext'
 import type { Category } from '../api/types'
@@ -14,6 +14,7 @@ export default function Header() {
   const [searchValue, setSearchValue] = useState('')
   const { user, logout } = useAuth()
   const navigate = useNavigate()
+  const location = useLocation()
   const closeTimer = useRef<number | null>(null)
 
   useEffect(() => {
@@ -21,6 +22,31 @@ export default function Header() {
       .then(setCategories)
       .catch(() => setCategories([]))
   }, [])
+
+  // با عوض شدن مسیر، منوی موبایل خودش بسته شود (مثلاً وقتی کاربر روی
+  // یک دسته‌بندی می‌زند و صفحه عوض می‌شود).
+  useEffect(() => {
+    setMobileOpen(false)
+    setExpandedMobileCategories([])
+  }, [location.pathname, location.search])
+
+  // وقتی کشوی موبایل باز است، اسکرول صفحه‌ی پشتش قفل شود و Escape ببنددش.
+  useEffect(() => {
+    if (!mobileOpen) return
+
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+
+    function onKeyDown(event: KeyboardEvent) {
+      if (event.key === 'Escape') setMobileOpen(false)
+    }
+    document.addEventListener('keydown', onKeyDown)
+
+    return () => {
+      document.body.style.overflow = previousOverflow
+      document.removeEventListener('keydown', onKeyDown)
+    }
+  }, [mobileOpen])
 
   function handleSearchSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -62,8 +88,10 @@ export default function Header() {
       <div className="container site-header__inner">
         {/* همبرگری - فقط موبایل */}
         <button
-          className="hamburger-btn"
-          aria-label="منو"
+          className={`hamburger-btn ${mobileOpen ? 'hamburger-btn--open' : ''}`}
+          aria-label={mobileOpen ? 'بستن منو' : 'باز کردن منو'}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
           onClick={() => setMobileOpen((v) => !v)}
         >
           <span />
@@ -78,7 +106,7 @@ export default function Header() {
         </Link>
 
         {/* دسته‌بندی‌ها - دسکتاپ */}
-        <nav className="main-nav">
+        <nav className="main-nav" aria-label="دسته‌بندی‌های اصلی">
           <ul>
             {categories.map((cat) => (
               <li
@@ -104,13 +132,15 @@ export default function Header() {
         {/* سرچ + ورود/ثبت‌نام - دسکتاپ / خوش‌آمدید - موبایل */}
         <div className="header-actions">
           <ThemeToggle />
-          <form className="search-box" onSubmit={handleSearchSubmit}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+          <form className="search-box" onSubmit={handleSearchSubmit} role="search">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2" />
               <path d="M20 20L16.65 16.65" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
             </svg>
             <input
-              type="text"
+              type="search"
+              name="q"
+              aria-label="جستجو در ارزلرن"
               placeholder="جستجو..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -132,12 +162,21 @@ export default function Header() {
         </div>
       </div>
 
-      {/* منوی موبایل */}
+      {/* منوی موبایل - کشوی تمام‌قد با پس‌زمینه‌ی تیره */}
       {mobileOpen && (
-        <div className="mobile-menu">
-          <form className="search-box mobile" onSubmit={handleSearchSubmit}>
+        <>
+          <button
+            type="button"
+            className="mobile-menu__backdrop"
+            aria-label="بستن منو"
+            onClick={closeMobileMenu}
+          />
+        <div className="mobile-menu" id="mobile-menu">
+          <form className="search-box mobile" onSubmit={handleSearchSubmit} role="search">
             <input
-              type="text"
+              type="search"
+              name="q"
+              aria-label="جستجو در ارزلرن"
               placeholder="جستجو..."
               value={searchValue}
               onChange={(e) => setSearchValue(e.target.value)}
@@ -204,6 +243,7 @@ export default function Header() {
             )}
           </div>
         </div>
+        </>
       )}
     </header>
   )

@@ -1,0 +1,23 @@
+{% extends "articles/prerender_base.html" %}
+
+{% block prerendered_body %}
+      <div class="pre">
+        <nav aria-label="مسیر صفحه"><a href="/">ارزلرن</a> › <span>{{ category.name }}</span></nav>
+        <h1>{{ category.name }}</h1>
+        <p>{{ page_description }}</p>
+        {% if children %}
+        <nav aria-label="زیردسته‌ها">
+          {% for child in children %}<a href="/category/{{ child.slug }}">{{ child.name }}</a>{% endfor %}
+        </nav>
+        {% endif %}
+        <ul>
+          {% for article in articles %}
+          <li>
+            <a href="/article/{{ article.slug }}">{{ article.title }}</a>
+            <time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date:'Y/m/d' }}</time>
+            <p>{{ article.summary }}</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+{% endblock %}

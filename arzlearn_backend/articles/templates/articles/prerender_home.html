@@ -1,0 +1,61 @@
+{% extends "articles/prerender_base.html" %}
+
+{% block prerendered_body %}
+      <div class="pre">
+        <nav aria-label="دسته‌بندی‌ها">
+          <a href="/">ارزلرن</a>
+          {% for category in categories %}<a href="/category/{{ category.slug }}">{{ category.name }}</a>{% endfor %}
+          <a href="/economic-calendar">تقویم اقتصادی</a>
+          <a href="/about">درباره ما</a>
+        </nav>
+
+        <h1>ارزلرن؛ اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال، دلار و طلا</h1>
+        <p>{{ page_description }}</p>
+
+        {% if prices %}
+        <section>
+          <h2>قیمت لحظه‌ای</h2>
+          <ul>
+            {% for price in prices %}<li><a href="/price/{{ price.slug }}">قیمت {{ price.name_fa }}</a>: {{ price.price_value }} {{ price.get_currency_display }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if news %}
+        <section>
+          <h2>آخرین اخبار</h2>
+          <ul>
+            {% for article in news %}
+            <li>
+              <a href="/article/{{ article.slug }}">{{ article.title }}</a>
+              <time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date:'Y/m/d' }}</time>
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if analysis %}
+        <section>
+          <h2>آخرین تحلیل‌ها</h2>
+          <ul>
+            {% for article in analysis %}
+            <li>
+              <a href="/article/{{ article.slug }}">{{ article.title }}</a>
+              <time datetime="{{ article.published_at|date:'c' }}">{{ article.published_at|date:'Y/m/d' }}</time>
+            </li>
+            {% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+
+        {% if exchanges %}
+        <section>
+          <h2>بهترین صرافی‌ها</h2>
+          <ul>
+            {% for exchange in exchanges %}<li>{{ exchange.name }}</li>{% endfor %}
+          </ul>
+        </section>
+        {% endif %}
+      </div>
+{% endblock %}

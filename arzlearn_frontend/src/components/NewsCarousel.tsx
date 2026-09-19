@@ -32,13 +32,13 @@ export default function NewsCarousel({ items, viewAllHref }: Props) {
           <div className="news-carousel__arrows">
             {/* آیکون و لیبل این دکمه دست‌نخورده مونده - فقط جهت حرکتش (goTo) عوض شده */}
             <button aria-label="خبر بعدی" onClick={() => goTo(activeIndex - 1)}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M9 6l6 6-6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
             {/* آیکون و لیبل این دکمه دست‌نخورده مونده - فقط جهت حرکتش (goTo) عوض شده */}
             <button aria-label="خبر قبلی" onClick={() => goTo(activeIndex + 1)}>
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
                 <path d="M15 6l-6 6 6 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
               </svg>
             </button>
@@ -56,14 +56,14 @@ export default function NewsCarousel({ items, viewAllHref }: Props) {
         <p className="text-muted">مقاله‌ای در دسته‌بندی اخبار یافت نشد.</p>
       ) : (
         <>
-          <div className="news-carousel__track">
+          <div className="news-carousel__track scroll-x" role="group" aria-label="آخرین اخبار">
             {items.map((article, index) => (
               <div
                 key={article.id}
                 className="news-carousel__slide"
                 ref={(el) => (cardRefs.current[index] = el)}
               >
-                <ArticleCard article={article} variant="hero" />
+                <ArticleCard article={article} variant="hero" priority={index === 0} />
               </div>
             ))}
           </div>

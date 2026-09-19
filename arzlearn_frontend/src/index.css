@@ -45,6 +45,27 @@ body {
   background: var(--color-bg);
   color: var(--color-text);
   line-height: 1.8;
+  /* روی موبایل بعضی وقت‌ها یک اسکرول افقی چند پیکسلی از کاروسل‌ها
+     ایجاد می‌شود؛ این خط جلویش را می‌گیرد. */
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+}
+
+/* اسکرول نرم برای لینک‌های داخلی، مگر اینکه کاربر انیمیشن کمتر خواسته باشد */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 a {
@@ -62,10 +83,47 @@ img {
   display: block;
 }
 
+/* -------- دسترس‌پذیری -------- */
+
+/*
+  حلقه‌ی فوکوس فقط برای کاربران کیبورد (focus-visible)، نه برای کلیک موس.
+  قبلاً هیچ نشانه‌ی فوکوسی روی لینک‌ها و دکمه‌ها نبود.
+*/
+:where(a, button, input, select, textarea, [tabindex]):focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+.skip-link {
+  position: absolute;
+  right: 12px;
+  top: -60px;
+  z-index: 200;
+  padding: 10px 18px;
+  border-radius: var(--radius-md);
+  background: var(--color-primary);
+  color: #fff;
+  font-weight: 600;
+  transition: top 0.18s ease;
+}
+
+.skip-link:focus {
+  top: 12px;
+}
+
 .container {
   max-width: var(--max-width);
   margin: 0 auto;
   padding: 0 20px;
+}
+
+@media (max-width: 480px) {
+  .container {
+    /* روی گوشی‌های باریک، حاشیه‌ی ۲۰ پیکسلی از دو طرف عرض مفید را
+       زیادی کم می‌کند */
+    padding: 0 14px;
+  }
 }
 
 .btn {
@@ -74,6 +132,9 @@ img {
   justify-content: center;
   gap: 6px;
   padding: 10px 20px;
+  /* هدف لمسی استاندارد؛ روی موبایل زدن دکمه‌های کوچک سخت بود */
+  min-height: 42px;
+  -webkit-tap-highlight-color: transparent;
   border-radius: var(--radius-md);
   border: none;
   font-size: 14px;
@@ -115,6 +176,18 @@ img {
   font-size: 20px;
   font-weight: 800;
   margin: 0;
+  line-height: 1.6;
+}
+
+@media (max-width: 600px) {
+  .section-title {
+    font-size: 17px;
+  }
+}
+
+/* تیترهای بلند فارسی روی موبایل نباید از کادر بزنند بیرون */
+h1, h2, h3, .section-title {
+  overflow-wrap: anywhere;
 }
 
 .card {
@@ -161,4 +234,24 @@ img {
 ::selection {
   background: var(--color-primary);
   color: #fff;
+}
+
+/*
+  کاروسل‌ها و جدول‌های عریض داخل خودشان اسکرول بخورند، نه اینکه کل صفحه
+  را افقی کنند. این یکی از دلایل رایج افت امتیاز موبایل در Lighthouse است.
+*/
+.scroll-x {
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: thin;
+}
+
+/* فرم‌ها روی iOS: فونت زیر ۱۶ پیکسل باعث می‌شود سافاری صفحه را زوم کند */
+@media (max-width: 768px) {
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
 }

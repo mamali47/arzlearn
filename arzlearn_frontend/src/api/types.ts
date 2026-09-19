@@ -82,11 +82,26 @@ export interface SocialLink {
   order: number
 }
 
+export interface TopBannerVariant {
+  webp: string | null
+  jpeg: string | null
+  width: number
+  height: number
+}
+
 export interface TopBanner {
-  image: string
-  image_mobile?: string | null   // این خط جدیده
+  id: number
   link_url: string
-  is_active: boolean
+  alt_text: string
+  fit_mode: 'cover' | 'contain'
+  background_color: string
+  display_height_desktop: number
+  display_height_mobile: number
+  desktop: TopBannerVariant
+  mobile: TopBannerVariant
+  /** نگه‌داشته شده برای سازگاری با نسخه‌های قبلی */
+  image?: string | null
+  image_mobile?: string | null
 }
 
 export interface Exchange {

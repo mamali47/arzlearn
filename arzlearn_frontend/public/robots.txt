@@ -1,4 +1,19 @@
 User-agent: *
 Allow: /
+
+# صفحاتی که محتوای یکتا ندارند؛ بودجه خزش صرف مقالات شود
 Disallow: /search
+Disallow: /login
+Disallow: /register
+Disallow: /forgot-password
+Disallow: /reset-password
+Disallow: /verify-email
+Disallow: /check-email
+Disallow: /api/
+Disallow: /*?q=
+
+# ربات‌های هوش مصنوعی که ترافیک سنگین می‌سازند
+User-agent: GPTBot
+Crawl-delay: 10
+
 Sitemap: https://arzlearn.ir/sitemap.xml

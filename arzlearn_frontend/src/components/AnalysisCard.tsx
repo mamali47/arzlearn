@@ -7,7 +7,7 @@ export default function AnalysisCard({ article }: { article: ArticleListItem }) 
   return (
     <Link to={`/article/${article.slug}`} className="analysis-card">
       <div className="analysis-card__image">
-        {article.image ? <img src={article.image} alt={article.title} loading="lazy" /> : <div className="analysis-card__placeholder" />}
+        {article.image ? <img src={article.image} alt={article.title} width={320} height={200} loading="lazy" decoding="async" /> : <div className="analysis-card__placeholder" />}
         <span className="analysis-card__badge">{article.category.name}</span>
       </div>
       <div className="analysis-card__body">

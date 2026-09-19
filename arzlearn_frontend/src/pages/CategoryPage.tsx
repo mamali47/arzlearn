@@ -62,7 +62,7 @@ export default function CategoryPage() {
               <article key={article.id} className="category-item card">
                 <Link to={`/article/${article.slug}`} className="category-item__image">
                   {article.image ? (
-                    <img src={article.image} alt={article.title} loading="lazy" />
+                    <img src={article.image} alt={article.title} width={480} height={270} loading="lazy" decoding="async" />
                   ) : (
                     <div className="category-item__placeholder" />
                   )}

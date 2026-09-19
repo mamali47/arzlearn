@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext'
 import { parseApiErrors } from '../utils/apiError'
 import PasswordInput from '../components/PasswordInput'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 const USERNAME_REGEX = /^[a-zA-Z0-9_.]+$/
 
@@ -17,6 +18,13 @@ function getPasswordIssues(password: string): string[] {
 }
 
 export default function RegisterPage() {
+  useSEO({
+    title: 'ثبت‌نام در ارزلرن',
+    description: 'ساخت حساب کاربری رایگان در ارزلرن.',
+    url: '/register',
+    noindex: true,
+  })
+
   const [username, setUsername] = useState('')
   const [displayName, setDisplayName] = useState('')
   const [email, setEmail] = useState('')

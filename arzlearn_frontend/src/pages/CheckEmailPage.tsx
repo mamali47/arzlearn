@@ -1,7 +1,15 @@
 import { Link, useLocation } from 'react-router-dom'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 export default function CheckEmailPage() {
+  useSEO({
+    title: 'ایمیلتان را بررسی کنید',
+    description: 'لینک تایید به ایمیل شما ارسال شد.',
+    url: '/check-email',
+    noindex: true,
+  })
+
   const location = useLocation()
   const email = (location.state as { email?: string } | null)?.email
 

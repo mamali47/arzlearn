@@ -7,7 +7,7 @@ export default function ExchangeCard({ exchange }: { exchange: Exchange }) {
     <div className="exchange-card card">
       <div className="exchange-card__logo">
         {exchange.logo ? (
-          <img src={exchange.logo} alt={exchange.name} loading="lazy" />
+          <img src={exchange.logo} alt={`لوگوی صرافی ${exchange.name}`} width={48} height={48} loading="lazy" decoding="async" />
         ) : (
           <div className="exchange-card__logo-placeholder">{exchange.name.charAt(0)}</div>
         )}

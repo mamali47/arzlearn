@@ -40,3 +40,24 @@
     grid-template-columns: 1fr;
   }
 }
+
+/*
+  h1 صفحه اصلی: عمداً کوچک و کم‌رنگ است تا مثل یک زیرعنوان دیده شود و
+  چیدمان فعلی را به هم نزند، ولی از نظر معنایی تیتر اصلی صفحه باشد.
+  (متن مخفی یا font-size: 0 عمداً استفاده نشده؛ گوگل آن را دستکاری
+  رتبه حساب می‌کند.)
+*/
+.home-page__lead {
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin: 14px 0 4px;
+}
+
+@media (max-width: 768px) {
+  .home-page__lead {
+    font-size: 14px;
+    margin: 10px 0 2px;
+  }
+}

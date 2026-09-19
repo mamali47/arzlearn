@@ -1,11 +1,42 @@
+/*
+  ارتفاع نوار بنر ثابت است و از دیتابیس می‌آید (متغیرهای --top-banner-h-*).
+  فضای آن قبل از لود شدن تصویر رزرو می‌شود تا صفحه نپرد.
+*/
 .top-banner-slot {
   display: block;
   width: 100%;
+  height: var(--top-banner-h-desktop, 92px);
+  background: var(--top-banner-bg, transparent);
+  overflow: hidden;
+  /* روی گوشی‌های دارای ناچ، بنر زیر نوار وضعیت نرود */
+  padding-top: env(safe-area-inset-top, 0px);
+  box-sizing: content-box;
+}
+
+.top-banner-slot__link {
+  display: block;
+  width: 100%;
+  height: 100%;
   line-height: 0;
 }
-.top-banner-slot picture,
-.top-banner-slot img {
-  width: 100%;
-  height: auto;
+
+.top-banner-slot picture {
   display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.top-banner-slot__img {
+  width: 100%;
+  height: 100%;
+  /* ارتفاع همیشه ثابت؛ تصویر داخل کادر جا می‌شود، نه برعکس */
+  object-fit: var(--top-banner-fit, cover);
+  object-position: center;
+  display: block;
+}
+
+@media (max-width: 768px) {
+  .top-banner-slot {
+    height: var(--top-banner-h-mobile, 104px);
+  }
 }

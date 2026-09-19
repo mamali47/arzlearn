@@ -4,8 +4,16 @@ import { useAuth } from '../context/AuthContext'
 import { parseApiErrors } from '../utils/apiError'
 import PasswordInput from '../components/PasswordInput'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 export default function LoginPage() {
+  useSEO({
+    title: 'ورود به حساب کاربری',
+    description: 'ورود به حساب کاربری ارزلرن.',
+    url: '/login',
+    noindex: true,
+  })
+
   const [identifier, setIdentifier] = useState('')
   const [password, setPassword] = useState('')
   const [generalError, setGeneralError] = useState<string | null>(null)

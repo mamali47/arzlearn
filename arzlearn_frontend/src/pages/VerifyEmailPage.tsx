@@ -2,8 +2,16 @@ import { useEffect, useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 import './AuthPages.css'
+import { useSEO } from '../hooks/useSEO'
 
 export default function VerifyEmailPage() {
+  useSEO({
+    title: 'تایید ایمیل',
+    description: 'تایید آدرس ایمیل حساب کاربری ارزلرن.',
+    url: '/verify-email',
+    noindex: true,
+  })
+
   const [searchParams] = useSearchParams()
   const token = searchParams.get('token') || ''
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')

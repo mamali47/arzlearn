@@ -1,0 +1,24 @@
+{% extends "articles/prerender_base.html" %}
+
+{% block prerendered_body %}
+      <div class="pre">
+        <nav aria-label="مسیر صفحه"><a href="/">ارزلرن</a> › <span>{{ asset_title }}</span></nav>
+        <h1>{{ asset_title }}</h1>
+        <p>{{ page_description }}</p>
+        {% if price %}
+        <p><strong>{{ price.price_value }} {{ price.get_currency_display }}</strong>
+           <span>({{ price.change_percent }}٪ تغییر ۲۴ ساعته)</span></p>
+        <p><time datetime="{{ price.updated_at|date:'c' }}">آخرین بروزرسانی: {{ price.updated_at|date:'Y/m/d H:i' }}</time></p>
+        {% endif %}
+        {% if faqs %}
+        <section>
+          <h2>سوالات متداول</h2>
+          <dl>{% for faq in faqs %}<dt>{{ faq.question }}</dt><dd>{{ faq.answer }}</dd>{% endfor %}</dl>
+        </section>
+        {% endif %}
+        <nav aria-label="سایر قیمت‌ها">
+          <h2>قیمت سایر دارایی‌ها</h2>
+          <ul>{% for item in other_assets %}<li><a href="/price/{{ item.slug }}">قیمت {{ item.name }}</a></li>{% endfor %}</ul>
+        </nav>
+      </div>
+{% endblock %}
