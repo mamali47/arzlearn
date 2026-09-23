@@ -6,7 +6,7 @@ import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import './index.css'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+ReactDOM.hydrateRoot(document.getElementById('root')!,
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>
