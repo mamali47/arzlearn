@@ -93,13 +93,24 @@ class ArticleDetailSerializer(ArticleListSerializer):
         return obj.author.get_public_name() if obj.author else None
 
     def get_related_articles(self, obj):
-        main_tag_ids = obj.main_tags.values_list('id', flat=True)
-        related_qs = (
-            Article.objects.filter(
-                main_tags__in=main_tag_ids, status='published'
-            )
+        # اول از همون دسته‌بندیِ مقاله می‌گیریم (دقیق‌تره)؛ چون تگ‌های خیلی
+        # کلی مثل «آموزش» باعث می‌شد مقاله‌های کاملاً نامربوط بهم لینک بخورن.
+        related = list(
+            Article.objects.filter(category=obj.category, status='published')
             .exclude(id=obj.id)
-            .distinct()
             .order_by('-published_at')[:4]
         )
-        return ArticleListSerializer(related_qs, many=True, context=self.context).data
+
+        if len(related) < 4:
+            main_tag_ids = obj.main_tags.values_list('id', flat=True)
+            existing_ids = {a.id for a in related}
+            extra = (
+                Article.objects.filter(main_tags__in=main_tag_ids, status='published')
+                .exclude(id=obj.id)
+                .exclude(id__in=existing_ids)
+                .distinct()
+                .order_by('-published_at')[: 4 - len(related)]
+            )
+            related.extend(extra)
+
+        return ArticleListSerializer(related, many=True, context=self.context).data
