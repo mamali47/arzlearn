@@ -193,6 +193,7 @@ class Command(BaseCommand):
             made += self.build_home()
         if only in (None, 'articles'):
             made += self.build_articles()
+            self.cleanup_stale_articles()
         if only in (None, 'categories'):
             made += self.build_categories()
         if only in (None, 'prices'):
@@ -342,6 +343,32 @@ class Command(BaseCommand):
             })
             count += 1
         return count
+    def cleanup_stale_articles(self):
+        """
+        پوشه‌های /article/<slug> که دیگه به هیچ مقاله‌ی published فعلی
+        اشاره نمی‌کنن رو پاک می‌کند (مثلاً بعد از تغییر اسلاگ یا
+        unpublish/حذف مقاله). بدون این، آدرس قدیمی با محتوای کهنه
+        برای همیشه روی سرور با کد 200 باقی می‌ماند و گوگل آن را
+        نسخه‌ی تکراری صفحه‌ی جدید می‌بیند.
+        """
+        articles_dir = os.path.join(self.dist_path, 'article')
+        if not os.path.isdir(articles_dir):
+            return 0
+
+        valid_slugs = set(
+            Article.objects.filter(status='published').values_list('slug', flat=True)
+        )
+
+        removed = 0
+        for name in os.listdir(articles_dir):
+            folder = os.path.join(articles_dir, name)
+            if not os.path.isdir(folder):
+                continue
+            if name not in valid_slugs:
+                shutil.rmtree(folder)
+                removed += 1
+                self.stdout.write(self.style.WARNING(f'حذف صفحه‌ی قدیمی: /article/{name}'))
+        return removed
 
     # ---------------------------------------------------------- دسته‌بندی‌ها
     def build_categories(self):
