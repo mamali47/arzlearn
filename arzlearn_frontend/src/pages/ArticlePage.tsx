@@ -40,6 +40,8 @@ export default function ArticlePage() {
   }
 
   useSEO({
+    // تا وقتی مقاله از API نیامده، متای ایستای صفحه (از generate_static_pages) را دست نزن
+    enabled: !!article,
     title: article?.title,
     description: article?.summary,
     image: article?.image ?? undefined,

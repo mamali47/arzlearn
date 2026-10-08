@@ -14,6 +14,13 @@ interface SEOOptions {
   publishedTime?: string
   modifiedTime?: string
   structuredData?: object | object[]
+  /**
+   * false = فعلاً هیچ تگی را دست نزن. صفحاتی که داده‌شان را از API می‌گیرند
+   * (مقاله، دسته‌بندی) تا قبل از رسیدن داده باید false بدهند؛ وگرنه هوک
+   * تایتل/توضیحات/og صفحه‌ی ایستای درست را با مقادیر پیش‌فرض «صفحه‌ی اصلی»
+   * بازنویسی می‌کند و خزنده برای همه‌ی صفحات همین متای مشترک را می‌بیند.
+   */
+  enabled?: boolean
 }
 
 const DEFAULT_TITLE = 'ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال، دلار و طلا'
@@ -73,8 +80,11 @@ export function useSEO({
   publishedTime,
   modifiedTime,
   structuredData,
+  enabled = true,
 }: SEOOptions) {
   useEffect(() => {
+    if (!enabled) return
+
     const finalTitle = title ? `${title} | ${SITE_NAME}` : DEFAULT_TITLE
     const finalDescription = clampDescription(description || DEFAULT_DESCRIPTION)
     // canonical همیشه بدون query string و بدون hash؛ وگرنه /search?q=x و
@@ -111,6 +121,14 @@ export function useSEO({
 
     setLink('canonical', canonical)
 
+    // JSON-LD های خودِ HTML ایستا (بدون صفت MANAGED) را پاک می‌کنیم تا بعد از
+    // اجرای جاوااسکریپت هر schema دوبار در صفحه نباشد.
+    if (structuredData) {
+      document.head
+        .querySelectorAll(`script[type="application/ld+json"]:not([${MANAGED}])`)
+        .forEach((node) => node.remove())
+    }
+
     const injected: HTMLScriptElement[] = []
     if (structuredData) {
       const items = (Array.isArray(structuredData) ? structuredData : [structuredData]).filter(
@@ -119,6 +137,7 @@ export function useSEO({
       items.forEach((item) => {
         const script = document.createElement('script')
         script.type = 'application/ld+json'
+        script.setAttribute(MANAGED, '')
         // جلوگیری از فرار از تگ اسکریپت اگر عنوان مقاله کاراکتر < داشته باشد
         script.textContent = JSON.stringify(item).replace(/</g, '\\u003C')
         document.head.appendChild(script)
@@ -131,6 +150,7 @@ export function useSEO({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
+    enabled,
     title,
     description,
     image,

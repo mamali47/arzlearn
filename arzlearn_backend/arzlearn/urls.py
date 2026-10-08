@@ -47,7 +47,7 @@ def robots_txt(request):
         'Disallow: /reset-password',
         'Disallow: /verify-email',
         'Disallow: /check-email',
-        'Disallow: /api/',
+        # /api/ عمداً بسته نیست: رندر جاوااسکریپتیِ گوگل برای نمایش محتوا به آن نیاز دارد.
         'Disallow: /*?q=',
         '',
         '# ربات‌های هوش مصنوعیِ اسکرپر که ترافیک سنگین می‌سازند',

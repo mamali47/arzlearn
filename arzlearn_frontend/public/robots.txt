@@ -9,7 +9,9 @@ Disallow: /forgot-password
 Disallow: /reset-password
 Disallow: /verify-email
 Disallow: /check-email
-Disallow: /api/
+# نکته: /api/ عمداً بسته نیست. صفحات با جاوااسکریپت از همین API محتوا
+# می‌گیرند؛ اگر گوگل‌بات اجازه‌ی خواندنش را نداشته باشد، صفحه را خالی/«یافت
+# نشد» رندر می‌کند و همه‌ی مقالات شبیه هم دیده می‌شوند.
 Disallow: /*?q=
 
 # ربات‌های هوش مصنوعی که ترافیک سنگین می‌سازند

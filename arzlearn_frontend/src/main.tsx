@@ -6,7 +6,11 @@ import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
 import './index.css'
 
-ReactDOM.hydrateRoot(document.getElementById('root')!,
+// نکته: اینجا عمداً createRoot است، نه hydrateRoot. HTML ایستایی که
+// generate_static_pages می‌سازد (div.pre) ساختار DOM ری‌اکت را ندارد؛ پس
+// hydrate همیشه mismatch می‌دهد و ری‌اکت مجبور می‌شود همه چیز را دوباره
+// رندر کند. createRoot محتوای ایستا را تمیز با نسخه‌ی تعاملی جایگزین می‌کند.
+ReactDOM.createRoot(document.getElementById('root')!).render(
   <React.StrictMode>
     <BrowserRouter>
       <ThemeProvider>

@@ -28,6 +28,8 @@ export default function CategoryPage() {
   const categoryName = data?.category?.name ?? ''
 
   useSEO({
+    // تا وقتی دسته از API نیامده، متای ایستای صفحه را دست نزن
+    enabled: !!categoryName,
     title: categoryName || undefined,
     description: categoryName ? `آخرین مقالات دسته‌بندی ${categoryName} در ارزلرن` : undefined,
     structuredData:

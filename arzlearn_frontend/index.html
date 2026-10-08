@@ -11,7 +11,14 @@
       name="description"
       content="مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا؛ همراه با معرفی صرافی‌ها، تقویم اقتصادی و آموزش‌های کاربردی بازار."
     />
-    <link rel="canonical" href="https://arzlearn.ir/" />
+    <!--
+      عمداً اینجا canonical، og:url، hreflang و JSON-LD صفحه‌ی اصلی نیست.
+      این فایل پوسته‌ی همه‌ی مسیرهاست (هر آدرسی که فایل ایستای خودش را
+      نداشته باشد این را می‌گیرد). اگر canonical صفحه‌ی اصلی اینجا باشد،
+      گوگل برای همه‌ی آن آدرس‌ها «canonical اعلام‌شده = صفحه‌ی اصلی» می‌بیند.
+      canonical درست را generate_static_pages (برای هر صفحه) و هوک useSEO
+      (سمت کلاینت) می‌گذارند.
+    -->
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="author" content="ارزلرن" />
 
@@ -19,8 +26,6 @@
     <meta name="theme-color" content="#f4f6fb" />
     <meta name="color-scheme" content="light dark" />
 
-    <link rel="alternate" hreflang="fa-IR" href="https://arzlearn.ir/" />
-    <link rel="alternate" hreflang="x-default" href="https://arzlearn.ir/" />
     <link rel="alternate" type="application/rss+xml" title="آخرین مطالب ارزلرن" href="/rss.xml" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
 
@@ -32,7 +37,6 @@
       property="og:description"
       content="مرجع اخبار، تحلیل و قیمت لحظه‌ای بیت‌کوین، اتریوم، سولانا، دلار و طلا."
     />
-    <meta property="og:url" content="https://arzlearn.ir/" />
     <meta property="og:image" content="https://arzlearn.ir/logo.png" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="ارزلرن | اخبار، تحلیل و قیمت لحظه‌ای ارزهای دیجیتال" />
@@ -68,37 +72,6 @@
       })();
     </script>
 
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@graph": [
-          {
-            "@type": "Organization",
-            "@id": "https://arzlearn.ir/#organization",
-            "name": "ارزلرن",
-            "alternateName": "Arzlearn",
-            "url": "https://arzlearn.ir/",
-            "logo": { "@type": "ImageObject", "url": "https://arzlearn.ir/logo.png" }
-          },
-          {
-            "@type": "WebSite",
-            "@id": "https://arzlearn.ir/#website",
-            "name": "ارزلرن",
-            "url": "https://arzlearn.ir/",
-            "inLanguage": "fa-IR",
-            "publisher": { "@id": "https://arzlearn.ir/#organization" },
-            "potentialAction": {
-              "@type": "SearchAction",
-              "target": {
-                "@type": "EntryPoint",
-                "urlTemplate": "https://arzlearn.ir/search?q={search_term_string}"
-              },
-              "query-input": "required name=search_term_string"
-            }
-          }
-        ]
-      }
-    </script>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-K5677NHH50"></script>
     <script>
