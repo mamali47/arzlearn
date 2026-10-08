@@ -98,6 +98,18 @@ CHANNEL_LAYERS = {
     },
 }
 
+# --------------------------------------------------------------------------
+# کش Redis - برای اینکه محدودسازی نرخ درخواست (throttling) روی لاگین/ثبت‌نام
+# وقتی با چند worker اجرا می‌شویم هم درست کار کند (کش پیش‌فرض جنگو مخصوص
+# هر پروسه است و بین workerها مشترک نیست).
+# --------------------------------------------------------------------------
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.redis.RedisCache',
+        'LOCATION': f'redis://{REDIS_HOST}:{REDIS_PORT}/1',
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
